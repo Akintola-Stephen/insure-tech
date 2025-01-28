@@ -1,4 +1,5 @@
-import { Table, Model, Column } from "sequelize-typescript";
+import { Table, Model, Column, HasOne } from "sequelize-typescript";
+import { Wallet } from "../wallet/wallet.model";
 
 
 @Table
@@ -7,4 +8,7 @@ export class User extends Model {
     name: String;
     @Column
     email: String;
+
+    @HasOne(() => Wallet)
+    wallet: Wallet;
 }
