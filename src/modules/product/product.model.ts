@@ -1,4 +1,4 @@
-import {Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class Product extends Model {
@@ -6,7 +6,7 @@ export class Product extends Model {
         type: DataType.STRING,
         allowNull: false,
     })
-    name: string;
+    productName: string;
 
     @Column({
         type: DataType.INTEGER,
