@@ -1,12 +1,19 @@
-import { Table, Model, Column, HasOne } from "sequelize-typescript";
+import { Table, Model, Column, HasOne, DataType } from "sequelize-typescript";
 import { Wallet } from "../wallet/wallet.model";
 
 
 @Table
 export class User extends Model {
-    @Column
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
     name: String;
-    @Column
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+        unique: true,
+    })
     email: String;
 
     @HasOne(() => Wallet)
