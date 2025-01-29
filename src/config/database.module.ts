@@ -3,6 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Product } from '../modules/product/product.model';
 import { ProductCategory } from '../modules/product-category/product-category.model';
+import { Wallet } from '../modules/wallet/wallet.model';
 
 @Module({
     imports: [
@@ -16,7 +17,7 @@ import { ProductCategory } from '../modules/product-category/product-category.mo
                 username: configService.get('DB_USER'),
                 password: configService.get('DB_PASSWORD'),
                 database: configService.get('DB_NAME'),
-                models: [Product, ProductCategory],
+                models: [Product, ProductCategory, Wallet],
                 autoLoadModels: true,
                 // synchronize: true, 
             }),
