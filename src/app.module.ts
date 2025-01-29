@@ -7,9 +7,10 @@ import { PlanModule } from './modules/plan/plan.module';
 import { PolicyModule } from './modules/policy/policy.module';
 import { UserModule } from './modules/user/user.module';
 import { WalletModule } from './modules/wallet/wallet.module';
+import { DatabaseModule } from './config/database.module';
 
 @Module({
-  imports: [ProductModule, ProductCategoryModule, PlanModule, PolicyModule, UserModule, WalletModule],
+  imports: [DatabaseModule, ProductModule, ProductCategoryModule, PlanModule, PolicyModule, UserModule, WalletModule],
   controllers: [AppController],
   providers: [AppService],
 })
