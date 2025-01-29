@@ -1,5 +1,7 @@
-import { Column, DataType, Model, Table, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Column, DataType, Model, Table, ForeignKey, BelongsTo, BelongsToMany } from 'sequelize-typescript';
 import { ProductCategory } from '../product-category/product-category.model';
+import { User } from '../user/user.model';
+import { UserProduct } from './product-user.model';
 
 @Table
 export class Product extends Model {
@@ -21,4 +23,7 @@ export class Product extends Model {
 
     @BelongsTo(() => ProductCategory)
     category: ProductCategory;
+
+    @BelongsToMany(() => User, () => UserProduct)
+    users: User;
 }
