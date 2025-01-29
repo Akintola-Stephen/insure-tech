@@ -12,6 +12,7 @@ export class ProductService {
 
     //TODO: Function that fetches every products
 
+
     async getProductWithCategoryByName(productName: string): Promise<Product> {
         const product = await this.productModel.findOne({
             where: {
