@@ -10,10 +10,10 @@ export class Product extends Model {
     productName: string;
 
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.DOUBLE,
         allowNull: false,
     })
-    price: number;
+    productAmount: number;
 
     @ForeignKey(() => ProductCategory)
     @Column
