@@ -7,6 +7,7 @@ import { WalletService } from "../wallet/wallet.service";
 export class UserService {
     constructor(
         @InjectModel(User) private userModel: typeof User,
+        
         private walletService: WalletService
     ) { }
 

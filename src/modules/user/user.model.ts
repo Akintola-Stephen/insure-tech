@@ -1,5 +1,8 @@
-import { Table, Model, Column, HasOne, DataType } from "sequelize-typescript";
+import { Table, Model, Column, HasOne, DataType, BelongsToMany, HasMany } from "sequelize-typescript";
 import { Wallet } from "../wallet/wallet.model";
+import { Product } from "../product/product.model";
+import { Plan } from "../plan/plan.model";
+import { UserProduct } from "../product/product-user.model";
 
 
 @Table
@@ -18,4 +21,10 @@ export class User extends Model {
 
     @HasOne(() => Wallet)
     wallet: Wallet;
+
+    @BelongsToMany(() => Product, () => UserProduct)
+    products: Product[];
+
+    @HasMany(() => Plan)
+    plans: Plan[];
 }
