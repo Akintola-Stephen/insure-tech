@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Product } from '../modules/product/product.model';
+import { User } from '../modules/user/user.model';
 import { ProductCategory } from '../modules/product-category/product-category.model';
 import { Wallet } from '../modules/wallet/wallet.model';
 
@@ -17,7 +18,7 @@ import { Wallet } from '../modules/wallet/wallet.model';
                 username: configService.get('DB_USER'),
                 password: configService.get('DB_PASSWORD'),
                 database: configService.get('DB_NAME'),
-                models: [Product, ProductCategory, Wallet],
+                models: [Product, ProductCategory, Wallet, User],
                 autoLoadModels: true,
                 // synchronize: true, 
             }),
