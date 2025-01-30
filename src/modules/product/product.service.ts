@@ -26,22 +26,29 @@ export class ProductService {
     async getProductDetailsByName(productName: string): Promise<Product> {
         const product = await this.productModel.findOne({
             where: {
-                productName
+                productName,
             },
             include: [
                 {
                     model: ProductCategory,
                     as: "category",
-                    attributes: ['categoryName']
-                }
-            ]
+                    attributes: ['id', 'categoryName'],
+                },
+            ],
+            raw: true,
+            nest: true,
         });
-        if (!product) throw new NotFoundException(`Product with name ${productName} not found`)
-        return product
+
+        if (!product) {
+            throw new NotFoundException(`Product with name ${productName} not found`);
+        }
+
+        return product;
     }
 
 
-    //TODO: Function that creates new product
+
+
 
     //TODO: Function that fetches every products
 }
