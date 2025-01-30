@@ -16,8 +16,18 @@ export class PolicyService {
 
     //  Get list of pending policies under a plan
     async getPendingPolicies(planId: number) {
-        const pendingPolicies = await this.pendingPolicyModel.scope('active').findAll({
-            where: { planId }
+        const pendingPolicies = await this.pendingPolicyModel.findAll({
+            where: { planId, status: 'unused' },  // Filter by planId and unused status
+            include: [
+                {
+                    model: Plan,
+                    attributes: ['id', 'planName', 'totalAmount']
+                },
+                {
+                    model: User,
+                    attributes: ['id', 'name', 'email']
+                }
+            ]
         });
 
         if (pendingPolicies.length === 0) {
@@ -27,12 +37,15 @@ export class PolicyService {
         return pendingPolicies;
     }
 
+
     //  Activate a pending policy (soft delete and create a policy)
     async activatePendingPolicy(userId: number, planId: number) {
 
-        const pendingPolicy = await this.pendingPolicyModel.findOne({
-            where: { userId, planId, status: 'unused' }
-        });
+        const pendingPolicy = await this.pendingPolicyModel.findOne(
+            {
+                where: { userId, planId, status: 'unused' }
+            }
+        );
 
         if (!pendingPolicy) {
             throw new NotFoundException('Pending policy not found or already used.');
@@ -70,5 +83,36 @@ export class PolicyService {
             },
         };
     }
+
+    // List of activated policies under a plan with detailed information
+    async getActivatedPolicies(planId?: number) {
+        const whereConditions: any = { status: 'used' };
+
+        // Add planId condition if provided
+        if (planId) {
+            whereConditions.planId = planId;
+        }
+
+        const activatedPolicies = await this.pendingPolicyModel.findAll({
+            where: whereConditions,
+            include: [
+                {
+                    model: Plan,
+                    attributes: ['id', 'planName', 'totalAmount']
+                },
+                {
+                    model: User,
+                    attributes: ['id', 'name', 'email']
+                }
+            ]
+        });
+
+        if (activatedPolicies.length === 0) {
+            throw new NotFoundException('No activated policies found.');
+        }
+
+        return activatedPolicies;
+    }
+
 
 }

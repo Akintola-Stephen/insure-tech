@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, ParseIntPipe, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param, ParseIntPipe, Body, Query } from '@nestjs/common';
 import { PolicyService } from './policy.service';
 
 @Controller('policies')
@@ -20,9 +20,10 @@ export class PolicyController {
         return await this.policyService.activatePendingPolicy(userId, planId);
     }
 
-    // Get all activated policies (optional filter by plan)
-    // @Get('activated')
-    // async getActivatedPolicies(@Body('planId') planId?: number) {
-    //     return await this.policyService.getActivatedPolicies(planId);
-    // }
+    @Get('activated')
+    async getActivatedPolicies(
+        @Query('planId') planId?: number, // Make planId optional here
+    ) {
+        return await this.policyService.getActivatedPolicies(planId);
+    }
 }

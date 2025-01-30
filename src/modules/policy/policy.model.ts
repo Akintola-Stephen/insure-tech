@@ -4,7 +4,7 @@ import { User } from "../user/user.model";
 
 
 @Scopes(() => ({
-    byPlan: (planId: number) => ({ where: { planId } }),
+    unused: () => ({ where: { status: 'unused' } })
 }))
 @Table
 export class PendingPolicy extends Model {
