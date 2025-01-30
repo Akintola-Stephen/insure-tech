@@ -118,6 +118,21 @@ Here is the complete API documentation for all available endpoints:
 #### Fetch Product By Product Name
 - **Method**: `GET`
 - **Endpoint**: `/product/{productName}`
+- **Response Body Format**:
+```json
+{
+  "id": 6,
+  "productName": "Optimal care standard",
+  "productAmount": 20000,
+  "productCategoryId": 1,
+  "createdAt": "2025-01-29T10:26:21.906Z",
+  "updatedAt": "2025-01-29T10:26:21.906Z",
+  "category": {
+    "id": 1,
+    "categoryName": "Health"
+  }
+}
+```
 
 #### Create Product
 - **Method**: `POST`
@@ -128,6 +143,18 @@ Here is the complete API documentation for all available endpoints:
   "productName": "Optimal care standard",
   "productAmount": 20000.0,
   "productCategoryId": 1
+}
+```
+
+- **Response Body Format**:
+```json
+{
+  "id": 7,
+  "productName": "Optimal care standard",
+  "productAmount": 20000,
+  "productCategoryId": 1,
+  "updatedAt": "2025-01-30T12:52:37.828Z",
+  "createdAt": "2025-01-30T12:52:37.828Z"
 }
 ```
 
@@ -143,11 +170,46 @@ Here is the complete API documentation for all available endpoints:
 }
 ```
 
+- **Response Body Format**:
+```json
+{
+  "id": 3,
+  "categoryName": "Auto-1",
+  "updatedAt": "2025-01-30T12:54:30.497Z",
+  "createdAt": "2025-01-30T12:54:30.497Z"
+}
+```
+
 ### **Policies**
 
 #### Get Pending Policies Under a Plan
 - **Method**: `GET`
 - **Endpoint**: `/policies/pending/{planId}`
+- **Response Body Format**:
+```json
+[
+  {
+    "id": 7,
+    "planId": 17,
+    "userId": 3,
+    "status": "unused",
+    "policyNumber": "Policy-b5490fa7-d3d8-4360-9a73-430a9869c21dPPL",
+    "isDeleted": false,
+    "createdAt": "2025-01-30T10:20:51.115Z",
+    "updatedAt": "2025-01-30T10:20:51.115Z",
+    "plan": {
+      "id": 17,
+      "planName": "Plan-e08bc130-46d5-4027-8adb-c629c245b54f",
+      "totalAmount": 40000
+    },
+    "user": {
+      "id": 3,
+      "name": "Stephen",
+      "email": "akintolastephen224@gmail.com"
+    }
+  }
+]
+```
 
 #### Activate a Pending Policy
 - **Method**: `POST`
@@ -160,25 +222,78 @@ Here is the complete API documentation for all available endpoints:
 }
 ```
 
+- **Response Body Format**:
+```json
+{
+  "message": "Policy activated successfully.",
+  "policy": {
+    "id": 14,
+    "policyNumber": "Policy-c1e75a4c-8525-47cc-b18d-63901858e85aPPL",
+    "userId": 3,
+    "planId": 24,
+    "status": "used"
+  },
+  "user": {
+    "id": 3,
+    "name": "Stephen",
+    "email": "akintolastephen224@gmail.com"
+  },
+  "plan": {
+    "id": 24,
+    "name": "Plan-bec16001-00b1-40ca-974a-174aecc2a320",
+    "totalAmount": 220000
+  }
+}
+```
+
 #### Get all Activated Plans by Plan ID
 - **Method**: `GET`
 - **Endpoint**: `/policies/activated?planId={planId}`
+- - **Response Body Format**:
+```json
+[
+  {
+    "id": 1,
+    "planId": 11,
+    "userId": null,
+    "status": "used",
+    "policyNumber": "Policy-cfca36d8-83c6-4829-a0e0-e9f458d74bbfPPL",
+    "isDeleted": false,
+    "createdAt": "2025-01-30T10:01:20.998Z",
+    "updatedAt": "2025-01-30T11:32:10.907Z",
+    "plan": {
+      "id": 11,
+      "planName": "Plan-7f67648a-2ad1-4a78-8550-f3bcf6294465",
+      "totalAmount": 40000
+    },
+    "user": null
+  },
+  {
+    "id": 14,
+    "planId": 24,
+    "userId": 3,
+    "status": "used",
+    "policyNumber": "Policy-c1e75a4c-8525-47cc-b18d-63901858e85aPPL",
+    "isDeleted": false,
+    "createdAt": "2025-01-30T10:33:49.914Z",
+    "updatedAt": "2025-01-30T11:35:06.743Z",
+    "plan": {
+      "id": 24,
+      "planName": "Plan-bec16001-00b1-40ca-974a-174aecc2a320",
+      "totalAmount": 220000
+    },
+    "user": {
+      "id": 3,
+      "name": "Stephen",
+      "email": "akintolastephen224@gmail.com"
+    }
+  }
+]
+```
 
 ---
 
 ## Testing
-
-### Environment Variables
-
-The application requires the following environment variables to be configured in the `.env` file:
-
-```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=1234
-DB_NAME="INSURE-TECH"
-```
 
 ### Running Tests
 
@@ -192,7 +307,18 @@ npm run test
 
 ## Deployment
 
-### Setting Up the Database
+### Setting Up the Database || Environment Variables
+
+
+The application requires the following environment variables to be configured in the `.env` file:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=1234
+DB_NAME="INSURE-TECH"
+```
 
 Make sure your PostgreSQL database is running and the `.env` file is correctly configured with the proper credentials.
 
