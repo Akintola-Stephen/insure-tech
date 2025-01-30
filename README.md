@@ -15,6 +15,8 @@ This is a backend application built using NestJS, designed for an insurance mana
 5. [Testing](#testing)
 6. [Deployment](#deployment)
 7. [Resources](#resources)
+8. [Environment Variables](#environment-variables)
+
 
 ---
 
@@ -22,6 +24,7 @@ This is a backend application built using NestJS, designed for an insurance mana
 
 - Node.js (v14.x or higher)
 - npm (v6.x or higher)
+- PostgreSQL (installed and configured)
 
 ---
 
@@ -55,6 +58,16 @@ npm run start:dev
 ---
 
 ## API Documentation
+
+
+## Base URL
+
+The base URL for the API is:
+Make sure to prefix this URL when accessing any endpoint in the API.
+```text
+`http://localhost:3000/api/v1`
+```
+
 
 Here is the complete API documentation for all available endpoints:
 
@@ -155,3 +168,33 @@ Here is the complete API documentation for all available endpoints:
 
 ## Testing
 
+### Environment Variables
+
+The application requires the following environment variables to be configured in the `.env` file:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=1234
+DB_NAME="INSURE-TECH"
+```
+
+### Running Tests
+
+To run tests, execute the following command:
+
+```bash
+npm run test
+```
+
+---
+
+## Deployment
+
+### Setting Up the Database
+
+Make sure your PostgreSQL database is running and the `.env` file is correctly configured with the proper credentials.
+
+
+---
