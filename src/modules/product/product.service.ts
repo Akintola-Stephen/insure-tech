@@ -2,14 +2,14 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Product } from "./product.model";
 import { ProductCategory } from "../product-category/product-category.model";
-import { ProductDto } from "./dto/product-dto";
+import { ProductDto } from "./dto/product.dto";
 
 @Injectable()
 export class ProductService {
     constructor(@InjectModel(Product) private productModel: typeof Product) { }
 
     async createProduct(productDto: ProductDto): Promise<Product> {
-        try {            
+        try {
             const product = await this.productModel.create(
                 {
                     productName: productDto.productName,

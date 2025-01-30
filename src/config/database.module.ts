@@ -5,6 +5,9 @@ import { Product } from '../modules/product/product.model';
 import { User } from '../modules/user/user.model';
 import { ProductCategory } from '../modules/product-category/product-category.model';
 import { Wallet } from '../modules/wallet/wallet.model';
+import { ProductPurchaseOrder } from '../modules/product/product-purchase-order.model';
+import { Plan } from '../modules/plan/plan.model';
+import { PendingPolicy } from '../modules/policy/policy.model';
 
 @Module({
     imports: [
@@ -18,9 +21,9 @@ import { Wallet } from '../modules/wallet/wallet.model';
                 username: configService.get('DB_USER'),
                 password: configService.get('DB_PASSWORD'),
                 database: configService.get('DB_NAME'),
-                models: [Product, ProductCategory, Wallet, User],
+                models: [Product, ProductCategory, Wallet, User, ProductPurchaseOrder, Plan, PendingPolicy],
                 autoLoadModels: true,
-                // synchronize: true, 
+                synchronize: true,
             }),
             inject: [ConfigService],
         }),

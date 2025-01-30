@@ -1,7 +1,7 @@
-import { Column, DataType, Model, Table, ForeignKey, BelongsTo, BelongsToMany } from 'sequelize-typescript';
+import { Column, DataType, Model, Table, ForeignKey, BelongsTo, BelongsToMany, AllowNull } from 'sequelize-typescript';
 import { ProductCategory } from '../product-category/product-category.model';
 import { User } from '../user/user.model';
-import { UserProduct } from './product-user.model';
+import { ProductPurchaseOrder } from './product-purchase-order.model';
 
 @Table
 export class Product extends Model {
@@ -11,11 +11,18 @@ export class Product extends Model {
     })
     productName: string;
 
+
     @Column({
         type: DataType.DOUBLE,
         allowNull: false,
     })
     productAmount: number;
+
+    @Column({
+        type: DataType.INTEGER,
+    })
+    quantity: number;
+
 
     @ForeignKey(() => ProductCategory)
     @Column
@@ -24,6 +31,6 @@ export class Product extends Model {
     @BelongsTo(() => ProductCategory)
     category: ProductCategory;
 
-    @BelongsToMany(() => User, () => UserProduct)
+    @BelongsToMany(() => User, () => ProductPurchaseOrder)
     users: User;
 }

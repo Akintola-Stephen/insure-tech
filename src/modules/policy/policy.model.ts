@@ -1,14 +1,26 @@
-import { Table, Model, Column, ForeignKey, BelongsTo, DataType } from "sequelize-typescript";
+import { Table, Model, Column, ForeignKey, BelongsTo, DataType, Scopes } from "sequelize-typescript";
 import { Plan } from "../plan/plan.model";
+import { User } from "../user/user.model";
 
+
+@Scopes(() => ({
+    byPlan: (planId: number) => ({ where: { planId } }),
+}))
 @Table
-export class Policy extends Model {
+export class PendingPolicy extends Model {
     @ForeignKey(() => Plan)
     @Column
     planId: number;
 
     @BelongsTo(() => Plan)
     plan: Plan;
+
+    @ForeignKey(() => User)
+    @Column
+    userId: number;
+
+    @BelongsTo(() => User)
+    user: User;
 
     @Column({
         type: DataType.ENUM('unused', 'used'),
@@ -29,3 +41,4 @@ export class Policy extends Model {
     })
     isDeleted: boolean;
 }
+
