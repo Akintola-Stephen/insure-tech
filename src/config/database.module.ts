@@ -14,19 +14,31 @@ import { PendingPolicy } from '../modules/policy/policy.model';
         ConfigModule.forRoot(),
         SequelizeModule.forRootAsync({
             imports: [ConfigModule],
-            useFactory: async (configService: ConfigService) => ({
-                dialect: 'postgres',
-                host: configService.get('DB_HOST'),
-                port: configService.get('DB_PORT') || 5432,
-                username: configService.get('DB_USER'),
-                password: configService.get('DB_PASSWORD'),
-                database: configService.get('DB_NAME'),
-                models: [Product, ProductCategory, Wallet, User, ProductPurchaseOrder, Plan, PendingPolicy],
-                autoLoadModels: true,
-                synchronize: true,
-            }),
+            useFactory: async (configService: ConfigService) => {
+                const isProduction = configService.get<string>('NODE_ENV') === 'production';
+
+                return {
+                    dialect: 'postgres',
+                    host: configService.get('DB_HOST', isProduction ? process.env.DB_HOST : 'localhost'),
+                    port: Number(configService.get('DB_PORT', isProduction ? process.env.DB_PORT : 5432)),
+                    username: configService.get('DB_USER', isProduction ? process.env.DB_USER : 'postgres'),
+                    password: configService.get('DB_PASSWORD', isProduction ? process.env.DB_PASSWORD : '1234'),
+                    database: configService.get('DB_NAME', isProduction ? process.env.DB_NAME : 'INSURE-TECH'),
+                    models: [Product, ProductCategory, Wallet, User, ProductPurchaseOrder, Plan, PendingPolicy],
+                    autoLoadModels: true,
+                    synchronize: true,
+                    dialectOptions: isProduction
+                        ? {
+                              ssl: {
+                                  required: true,
+                                  rejectUnauthorized: false,
+                              },
+                          }
+                        : {},
+                };
+            },
             inject: [ConfigService],
         }),
     ],
 })
-export class DatabaseModule { }
+export class DatabaseModule {}
