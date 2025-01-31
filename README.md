@@ -313,6 +313,7 @@ npm run test
 The application requires the following environment variables to be configured in the `.env` file:
 
 ```env
+NODE_ENV=development
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres
